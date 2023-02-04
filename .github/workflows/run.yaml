@@ -28,8 +28,45 @@ jobs:
         run: |
           echo "${responseIwa}" > instagram-cache.json
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+name: Node.js Server
+
+on:
+  schedule:
+    - cron: "0 */3 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v2
         with:
-          name: instagram-cache.json
-          path: instagram-cache.json
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start server
+        run: npm start
+        
+      - name: Write response to file
+        run: |
+          echo "${responseIwa}" > instagram-cache.json
+
+      - name: Commit and push file
+        uses: actions/checkout@v2
+        with:
+          ref: main
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          run: |
+            git config --global user.email "novian.andika@students.amikom.ac.id"
+            git config --global user.name "fleetimee"
+            git add instagram-cache.json
+            git commit -m "Add instagram-cache.json"
+            git push origin master
