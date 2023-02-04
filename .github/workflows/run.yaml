@@ -23,3 +23,10 @@ jobs:
 
       - name: Start server
         run: npm start
+        
+      - name: Store Response to Github Repository
+        uses: actions/upload-artifact@v2
+        with:
+          name: responseIwa
+          path: response.json
+        if: always()
