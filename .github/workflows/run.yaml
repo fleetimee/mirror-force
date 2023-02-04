@@ -31,7 +31,7 @@ jobs:
       - name: Commit and push file
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: master
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           run: |
