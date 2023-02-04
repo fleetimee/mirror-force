@@ -4,6 +4,9 @@
     "instagram-without-api-node": "^1.0.9",
     "node-cron": "^3.0.2"
   },
+  "scripts": {
+    "start": "node test.js"
+  },
   "devDependencies": {
     "nodemon": "^2.0.20"
   }
