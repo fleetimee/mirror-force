@@ -24,9 +24,19 @@ jobs:
       - name: Start server
         run: npm start
         
-      - name: Store Response to Github Repository
-        uses: actions/upload-artifact@v2
+      - name: Write response to file
+        run: |
+          echo "${responseIwa}" > instagram-cache.json
+
+      - name: Commit and push file
+        uses: actions/checkout@v2
         with:
-          name: responseIwa
-          path: response.json
-        if: always()
+          ref: main
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          run: |
+            git config --global user.email "novian.andika@students.amikom.ac.id"
+            git config --global user.name "fleetimee"
+            git add instagram-cache.json
+            git commit -m "Add instagram-cache.json"
+            git push origin main
