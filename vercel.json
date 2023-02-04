@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "name": "name-of-your-vercel-app",
+  "builds": [{ "src": "test.js", "use": "@vercel/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "/test.js" }]
+}
